@@ -1,0 +1,3 @@
+## Todo List ##
+* get string replacement in there, so '\!' becomes '!'
+* 
