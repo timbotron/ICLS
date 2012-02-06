@@ -11,7 +11,7 @@ ICLS is a command-line, python-based logging system. Specifically, it's designed
 ### Notable features will include: ###
 
 * Dead-simple to add an entry (icls "entry text here")
-* Flag for completed task
+* Flag for completed task, which 
 * icls.conf config file
 * entry retrieval (via unnecessary menu?!)
 
@@ -20,4 +20,4 @@ ICLS is a side project. I want a log I can throw all my little random posts into
 
 ## License ##
 
-JPEF Magic by Tim Habersack is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License.
+ICLS by Tim Habersack is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License.
