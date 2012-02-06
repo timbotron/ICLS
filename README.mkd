@@ -1,19 +1,22 @@
 # Project: #
-Inconceivably Complex Logging System
+ICLS (Inconceivably Complex Logging System)
 
 ## Contributors: ##
 Tim Habersack (tim@hithlonde.com - http://tim.hithlonde.com)
 
 ## Summary: ##
-ICLS (Inconceivably Complex Logging System) is command-line, python-based logging system. Specifically, it's designed for a contract worker to be logging what they are doing at that time, bugs they figured out, etc. There will be a flag for when something is actually completed. 
+ICLS is a command-line, python-based logging system. Specifically, it's designed for a contract worker to be logging what they are doing at that time, bugs they figured out, etc. There will be a flag for when something is actually completed. 
 
 
 ### Notable features will include: ###
 
-* 
+* Dead-simple to add an entry (icls "entry text here")
+* Flag for completed task
+* icls.conf config file
+* entry retrieval (via unnecessary menu?!)
 
 ## Reason for Building ##
-ICLS (Inconceivably Complex Logging System) is a side project. I want a log I can throw all my little random posts into, without feeling weird about compromising the 'professionalism' of my identi.ca/twitter account. Also, I want to try working with Amazon's SimpleDB.
+ICLS is a side project. I want a log I can throw all my little random posts into, without feeling weird about compromising the 'professionalism' of my identi.ca/twitter account. Also, I want to try working with Amazon's SimpleDB.
 
 ## License ##
 
