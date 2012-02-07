@@ -18,6 +18,10 @@ ICLS is a command-line, python-based logging system. Specifically, it's designed
 ## Reason for Building ##
 ICLS is a side project. I want a log I can throw all my little random posts into, without feeling weird about compromising the 'professionalism' of my identi.ca/twitter account. Also, I want to try working with Amazon's SimpleDB.
 
+## Helpful Links ##
+* [AWS Management Console](https://console.aws.amazon.com/console/home)
+* [Getting Started with SimpleDB](http://docs.amazonwebservices.com/AmazonSimpleDB/latest/GettingStartedGuide/Welcome.html)
+
 ## License ##
 
 ICLS by Tim Habersack is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License.
