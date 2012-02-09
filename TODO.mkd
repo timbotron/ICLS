@@ -1,3 +1,13 @@
 ## Todo List ##
-* get string replacement in there, so '\!' becomes '!'
-* 
+* Set up account for SimpleDB
+* make conf file with appropriate fields
+* icls errors if conf info isn't there
+    * is config there?
+    * are values set?
+* icls post possible errors
+    * no domain
+    * domain doesn't match
+    * can't make entry
+    * key invalid
+    * timed out?
+    * if no domain error, make domain based on config, when okay then post. Else descriptive errors. all in red of course.

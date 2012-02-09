@@ -21,6 +21,7 @@ ICLS is a side project. I want a log I can throw all my little random posts into
 ## Helpful Links ##
 * [AWS Management Console](https://console.aws.amazon.com/console/home)
 * [Getting Started with SimpleDB](http://docs.amazonwebservices.com/AmazonSimpleDB/latest/GettingStartedGuide/Welcome.html)
+* [Amazon SimpleDB Development Guide](http://docs.amazonwebservices.com/AmazonSimpleDB/2009-04-15/DeveloperGuide/Welcome.html)
 
 ## License ##
 
