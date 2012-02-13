@@ -8,12 +8,16 @@ Tim Habersack (tim@hithlonde.com - http://tim.hithlonde.com)
 ICLS is a command-line, python-based logging system. Specifically, it's designed for a contract worker to be logging what they are doing at that time, bugs they figured out, etc. There will be a flag for when something is actually completed. 
 
 
-### Notable features will include: ###
+## Notable features will include: ##
 
 * Dead-simple to add an entry (icls "entry text here")
 * Flag for completed task, which 
 * icls.conf config file
 * entry retrieval (via unnecessary menu?!)
+
+## Requirements ##
+* Python
+* [Boto, a Python package](https://code.google.com/p/boto/), I didn't want to use any packages, but using boto makes the auth, etc much easier. And at the end of day, I want to get this working, not take forever re-inventing the wheel on HMAC signature generation
 
 ## Reason for Building ##
 ICLS is a side project. I want a log I can throw all my little random posts into, without feeling weird about compromising the 'professionalism' of my identi.ca/twitter account. Also, I want to try working with Amazon's SimpleDB.
@@ -22,6 +26,7 @@ ICLS is a side project. I want a log I can throw all my little random posts into
 * [AWS Management Console](https://console.aws.amazon.com/console/home)
 * [Getting Started with SimpleDB](http://docs.amazonwebservices.com/AmazonSimpleDB/latest/GettingStartedGuide/Welcome.html)
 * [Amazon SimpleDB Development Guide](http://docs.amazonwebservices.com/AmazonSimpleDB/2009-04-15/DeveloperGuide/Welcome.html)
+* [helpful boto connect_sdb parameters](http://permalink.gmane.org/gmane.comp.python.boto/1642)
 
 ## License ##
 
