@@ -1,3 +1,1 @@
-$access_key_id=''
-$secret_access_key=''
-$domain='icls'
+values={'access_key_id':'access key here','secret_access_key':'secret key here','domain':'your desired domain name here'}
