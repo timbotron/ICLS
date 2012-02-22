@@ -1,7 +1,8 @@
 import sys
 import xml.dom.minidom
-from time import strftime, localtime
+from time import strftime, strptime, localtime
 from uuid import uuid4
+from re import compile
 import config
 import boto.sdb
 from boto.exception import SDBResponseError
@@ -19,7 +20,7 @@ from uuid import uuid4
 
 
 def colorize(the_color='blue',entry='',new_line=0):
-	color={'gray':30,'green':32,'red':31,'blue':34,'magenta':35,'cyan':36}
+	color={'gray':30,'green':32,'red':31,'blue':34,'magenta':35,'cyan':36,'white':37,'highgreen':42,'highblue':44,'highred':41,'highgray':47}
 	if new_line==1:
 		new_line='\n'
 	else:
@@ -58,34 +59,48 @@ def connect():
 		aws_print_error(error)
   	return conn		
   
-def format_entry_dict(entry='',done=0):
-	tags=''
-	if entry.count('#'):
-		print "tags!"
-	entry_dict={'com':done,'entry':entry,'date':strftime("%Y-%m-%dT%H:%M:%S+0000", localtime())}
-	return entry_dict
+def add_tags(dom,the_id,entry=''):
+	if entry.count('#'):		
+		pat = compile(r"#(\w+)")		
+		for x in pat.findall(entry):
+			try:
+				print x
+				dom.put_attributes(the_id,{'tag':x},replace=False)
+			except SDBResponseError as error:
+				aws_print_error(error)	
+	return True
 
 #takes in domain connection, entry text, and flag of completed or not.
 def logEntry(dom,entry='',done=0):
+	the_id=uuid4()
+	entry_dict={'com':done,'entry':entry,'date':strftime("%Y-%m-%dT%H:%M:%S+0000", localtime())}
 	output=''
 	if done==1:
 		output+=colorize('cyan','Completed a task, way to go!',1)	
-	try:
-		entry_dict=format_entry_dict(entry,done)
-		#dom.put_attributes(uuid4(),entry_dict)
-		print entry_dict
+	try:		
+		dom.put_attributes(the_id,entry_dict)
+		add_tags(dom,the_id,entry)
 	except SDBResponseError as error:
 			aws_print_error(error)
 	output+=colorize('gray','Entry: '+entry_text,1)
 	output+=colorize('green','Log entry submitted successfully.')
 	print output
 	return True
+#takes an entry, and makes it pretty!
+def makeover(entry):	
+	output=colorize('gray','==============================',1)	
+	output+=colorize('cyan',entry['entry'],1)
+	output+=colorize('gray',strftime("%H:%M %m.%d.%Y", strptime(entry['date'],"%Y-%m-%dT%H:%M:%S+0000")),0)
+	return output
+			
+	
 #generates reports, TODO match the readme functionality on this
 def fetchRecord(dom):
 	query = 'select * from `icls`'
 	results = dom.select(query)
-	for j in results:
-		print j['entry']
+	for result in results:
+		print makeover(result)
+	print colorize('gray','==============================',0)
 	return True
 #
 #
