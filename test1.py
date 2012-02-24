@@ -64,7 +64,7 @@ def add_tags(dom,the_id,entry=''):
 		pat = compile(r"#(\w+)")		
 		for x in pat.findall(entry):
 			try:
-				print x
+				#print x
 				dom.put_attributes(the_id,{'tag':x},replace=False)
 			except SDBResponseError as error:
 				aws_print_error(error)	
@@ -95,8 +95,11 @@ def makeover(entry):
 			
 	
 #generates reports, TODO match the readme functionality on this
-def fetchRecord(dom):
-	query = 'select * from `icls`'
+def fetchRecord(dom,the_type='r',needle=''):
+	if the_type=='t':
+		query = 'select * from `icls` where tag="'+needle+'"'
+	else: 
+		query = 'select * from `icls`'
 	results = dom.select(query)
 	for result in results:
 		print makeover(result)
@@ -134,6 +137,7 @@ except SDBResponseError as error:
 
 entry_text=''
 output=''
+print len(sys.argv)
 
 if sys.argv[1]=='-c':
 	#is a standard log entry that has been flagged completed	
@@ -145,7 +149,13 @@ if sys.argv[1]=='-c':
 elif sys.argv[1]=='-r':
 	#Requesting a report, check for dates
 	try:
-		fetchRecord(dom)
+		fetchRecord(dom,'r')
+	except SDBResponseError as error:
+		aws_print_error(error)
+elif sys.argv[1]=='-t':
+	#Requesting a report, check for dates
+	try:
+		fetchRecord(dom,'t',sys.argv[2])
 	except SDBResponseError as error:
 		aws_print_error(error)
 else:

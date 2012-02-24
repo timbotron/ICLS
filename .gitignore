@@ -1,3 +1,4 @@
 #files to ignore
 config.py
 config.pyc
+*.pyc
