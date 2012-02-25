@@ -101,9 +101,12 @@ def fetchRecord(dom,the_type='r',needle=''):
 	else: 
 		query = 'select * from `icls`'
 	results = dom.select(query)
+	results_yn=0 	#this is in case there are no results, don't know why this isn't built in.
 	for result in results:
+		results_yn=1
 		print makeover(result)
-	print colorize('gray','==============================',0)
+	if results_yn==1:
+		print colorize('gray','==============================',0)
 	return True
 #
 #
