@@ -73,6 +73,7 @@ def add_tags(dom,the_id,entry=''):
 #takes in domain connection, entry text, and flag of completed or not.
 def logEntry(dom,entry='',done=0):
 	the_id=uuid4()
+	entry=entry.replace('\\','')
 	entry_dict={'com':done,'entry':entry,'date':strftime("%Y-%m-%dT%H:%M:%S+0000", localtime())}
 	output=''
 	if done==1:
@@ -93,7 +94,32 @@ def makeover(entry):
 	output+=colorize('gray',strftime("%H:%M %m.%d.%Y", strptime(entry['date'],"%Y-%m-%dT%H:%M:%S+0000")),0)
 	return output
 			
+class options:
+	flags={'is_report':False,'is_entry':False,'is_tag':False,'is_search':False,'is_default':False,'is_complete':False,'is_help':False}
+	def __init__(self,argv):
+		if argv[1][0]=='-':
+			for arg in argv[1]:
+				if arg=='r':   self.flags['is_report']=True
+				elif arg=='d': self.flags['is_default']=True
+				elif arg=='c':
+					self.flags['is_complete']=True
+					self.flags['is_entry']=True				
+				elif arg=='h': self.flags['is_help']=True
+				elif arg=='t': self.flags['is_tag']=True
+				elif arg=='s': self.flags['is_search']=True
+			if self.flags['is_tag']==True and self.flags['is_search']==True: self.flags['is_help']=True
+		else: self.flags['is_entry']=True
+
+class aRequest:
+	startDate=False
+	endDate=False
+	term=False
+	istag=False
+	def __init__(self,dom,argv):
+		self.dom=dom
+		self.argv=argv
 	
+
 #generates reports, TODO match the readme functionality on this
 def fetchRecord(dom,the_type='r',needle=''):
 	if the_type=='t':
@@ -152,7 +178,9 @@ if sys.argv[1]=='-c':
 elif sys.argv[1]=='-r':
 	#Requesting a report, check for dates
 	try:
-		fetchRecord(dom,'r')
+		#fetchRecord(dom,'r')
+		#the_report=aRequest(dom,sys.argv)
+		#print the_report.argv		
 	except SDBResponseError as error:
 		aws_print_error(error)
 elif sys.argv[1]=='-t':
