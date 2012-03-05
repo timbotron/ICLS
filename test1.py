@@ -93,22 +93,83 @@ def makeover(entry):
 	output+=colorize('cyan',entry['entry'],1)
 	output+=colorize('gray',strftime("%H:%M %m.%d.%Y", strptime(entry['date'],"%Y-%m-%dT%H:%M:%S+0000")),0)
 	return output
+#If, during parsing, help was flagged print out help text and then exit
+def print_help():
+	print colorize('highblue',"ICLS (Inconcievebly Complex Logging System)",1)
+	print colorize('white','DESCRIPTION:')
+	print "A silly, contrived command line application to add and search text entries that are stored in Amazons AWS SimpleDB.\n"
+	print colorize('white','SYNTAX:')
+	sys.exit()
 			
-class options:
-	flags={'is_report':False,'is_entry':False,'is_tag':False,'is_search':False,'is_default':False,'is_complete':False,'is_help':False}
+class parsing:
+	flags={'is_report':False,
+			'is_entry':False,
+			'entry_text':'',
+			'is_tag':False,
+			'is_search':False,
+			'search_term':'',
+			'is_default':False,
+			'is_complete':False,
+			'is_help':False,
+			'start_date':False,
+			'end_date':False}
 	def __init__(self,argv):
 		if argv[1][0]=='-':
 			for arg in argv[1]:
 				if arg=='r':   self.flags['is_report']=True
-				elif arg=='d': self.flags['is_default']=True
+				elif arg=='d':
+					self.flags['is_default']=True
+					self.flags['is_entry']=True
+					self.flags['entry_text']=argv[2]
 				elif arg=='c':
 					self.flags['is_complete']=True
-					self.flags['is_entry']=True				
+					self.flags['is_entry']=True
+					self.flags['entry_text']=argv[2]		
 				elif arg=='h': self.flags['is_help']=True
-				elif arg=='t': self.flags['is_tag']=True
-				elif arg=='s': self.flags['is_search']=True
-			if self.flags['is_tag']==True and self.flags['is_search']==True: self.flags['is_help']=True
-		else: self.flags['is_entry']=True
+				elif arg=='t':
+					self.flags['is_tag']=True
+					self.flags['is_search']=True
+					self.flags['is_report']=True
+				elif arg=='s':
+					self.flags['is_search']=True
+					self.flags['is_report']=True
+			if self.flags['is_complete']==True and self.flags['is_report']==True: self.flags['is_help']=True
+		else:
+			self.flags['is_entry']=True
+			self.flags['entry_text']=argv[1]
+		#If anything was wrong, send to help
+		if self.flags['is_help']:
+			print_help()
+		#Lets get all the report/search stuff together!
+		if self.flags['is_report']:
+			#It's a report, first try to parse it
+			print "It's a report!, num of args:"+str(len(argv))
+			if self.flags['is_search']:
+				print "It's a search!"
+				if len(argv)<3:	print_error('No Search term or tag detected; use -h to see options')
+				elif len(argv)==3:
+					#term only
+					self.flags['search_term']=argv[2]
+				elif len(argv)==4:
+					#term and start date
+					self.flags['search_term']=argv[2]
+					self.flags['start_date']=argv[3]
+				elif len(argv)==5:
+					#term, start and finish date
+					self.flags['search_term']=argv[2]
+					self.flags['start_date']=argv[3]
+					self.flags['end_date']=argv[4]				
+			else:				
+				if len(argv)==3:
+					#start date only
+					self.flags['start_date']=argv[2]
+				elif len(argv)==4:
+					#term and start date
+					self.flags['start_date']=argv[2]
+					self.flags['end_date']=argv[3]
+		print self.flags		
+
+		
 
 class aRequest:
 	startDate=False
@@ -146,6 +207,9 @@ if (config.values['access_key_id']=='access key here'
 	or config.values['domain']=='your desired domain name here'):
 	print_error('Please set your values in the config.py file!')
 
+#Second, we see if the options they used make sense
+the_input=parsing(sys.argv)
+
 #Now we connect to AWS!
 conn=connect()
 
@@ -163,38 +227,11 @@ except SDBResponseError as error:
 		aws_print_error(error)
 
 
+	
+
+
 
 entry_text=''
 output=''
-print len(sys.argv)
 
-if sys.argv[1]=='-c':
-	#is a standard log entry that has been flagged completed	
-	entry_text=sys.argv[2].replace('\\','')
-	try:
-		logEntry(dom,entry_text,1)
-	except SDBResponseError as error:
-		aws_print_error(error)
-elif sys.argv[1]=='-r':
-	#Requesting a report, check for dates
-	try:
-		#fetchRecord(dom,'r')
-		#the_report=aRequest(dom,sys.argv)
-		#print the_report.argv		
-	except SDBResponseError as error:
-		aws_print_error(error)
-elif sys.argv[1]=='-t':
-	#Requesting a report, check for dates
-	try:
-		fetchRecord(dom,'t',sys.argv[2])
-	except SDBResponseError as error:
-		aws_print_error(error)
-else:
-	#is standard, non-completed log entry
-	entry_text=sys.argv[1].replace('\\','')
-	try:
-		logEntry(dom,entry_text,0)
-	except SDBResponseError as error:
-		aws_print_error(error)
-	
 

@@ -1,9 +1,8 @@
 ## Todo List ##
-* Set up account for SimpleDB
-* make conf file with appropriate fields
-* icls errors if conf info isn't there
-    * is config there?
-    * are values set?
+* Make the 'if report' and elif entry in main area
+* rewrite a mean report/search method
+* rewrite a mean entry method
+* Figure out acceptable date fields, note for -help
 * icls post possible errors
     * no domain
     * can't make entry
