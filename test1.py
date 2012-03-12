@@ -51,7 +51,7 @@ def print_error(error_text):
   	return True
 
 def connect():
-	conn = boto.sdb.connect_to_region('us-west-2',aws_access_key_id=config.values['access_key_id'],
+	conn = boto.sdb.connect_to_region(config.values['region'],aws_access_key_id=config.values['access_key_id'],
 						aws_secret_access_key=config.values['secret_access_key'])
 	try:
 		conn.get_all_domains()
@@ -107,12 +107,13 @@ class parsing:
 			'entry_text':'',
 			'is_tag':False,
 			'is_search':False,
-			'search_term':'',
+			'search_term':[],
 			'is_default':False,
 			'is_complete':False,
 			'is_help':False,
 			'start_date':False,
-			'end_date':False}
+			'end_date':False,
+			'search_query':False}
 	def __init__(self,argv):
 		if argv[1][0]=='-':
 			for arg in argv[1]:
@@ -142,21 +143,33 @@ class parsing:
 			print_help()
 		#Lets get all the report/search stuff together!
 		if self.flags['is_report']:
+			self.flags['search_query']='select * from `icls` WHERE '
 			#It's a report, first try to parse it
 			print "It's a report!, num of args:"+str(len(argv))
 			if self.flags['is_search']:
 				print "It's a search!"
 				if len(argv)<3:	print_error('No Search term or tag detected; use -h to see options')
-				elif len(argv)==3:
-					#term only
-					self.flags['search_term']=argv[2]
-				elif len(argv)==4:
-					#term and start date
-					self.flags['search_term']=argv[2]
+				else:					
+					if argv[2].count(',')>0:
+						for i, v in enumerate(argv[2].split(',')):
+							self.flags['search_term'].append(v)
+					else: self.flags['search_term'].append(argv[2])
+					# TODO Now we iterate and make there where clause, IN if search, tag= if tag
+					for key, term in enumerate(self.flags['search_term']):
+						if self.flags['is_tag']:
+							if key>0:	self.flags['search_query']+=' AND '
+							self.flags['search_query']+="tag='"+term+"'"
+						else:
+							if key==0: self.flags['search_query']+="entry IN ("
+							if key>0:	self.flags['search_query']+=','
+							self.flags['search_query']+="'"+term+"'"
+					if self.flags['is_tag']==False: self.flags['search_query']+=')' #for end of in statement
+	
+				if len(argv)==4:
+					#term and start date					
 					self.flags['start_date']=argv[3]
 				elif len(argv)==5:
-					#term, start and finish date
-					self.flags['search_term']=argv[2]
+					#term, start and finish date					
 					self.flags['start_date']=argv[3]
 					self.flags['end_date']=argv[4]				
 			else:				
@@ -166,25 +179,17 @@ class parsing:
 				elif len(argv)==4:
 					#term and start date
 					self.flags['start_date']=argv[2]
-					self.flags['end_date']=argv[3]
-		print self.flags		
+					self.flags['end_date']=argv[3]		
 
-		
 
-class aRequest:
-	startDate=False
-	endDate=False
-	term=False
-	istag=False
-	def __init__(self,dom,argv):
-		self.dom=dom
-		self.argv=argv
+		print self.flags
+
 	
 
 #generates reports, TODO match the readme functionality on this
 def fetchRecord(dom,the_type='r',needle=''):
 	if the_type=='t':
-		query = 'select * from `icls` where tag="'+needle+'"'
+		query = 'select * from `icls`'+needle
 	else: 
 		query = 'select * from `icls`'
 	results = dom.select(query)
@@ -200,7 +205,7 @@ def fetchRecord(dom,the_type='r',needle=''):
 #	BEGIN MAIN
 #
 #
-
+print sys.argv
 #First we make sure the config has variables in it
 if (config.values['access_key_id']=='access key here' 
 	or config.values['secret_access_key']=='secret key here' 
@@ -225,6 +230,9 @@ except SDBResponseError as error:
 			aws_print_error(error)
 	else:
 		aws_print_error(error)
+
+#if the_input.flags['is_report']==True:
+	#fetchRecord(dom,'t')
 
 
 	
