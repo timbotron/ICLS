@@ -143,10 +143,11 @@ class parsing:
 			print_help()
 		#Lets get all the report/search stuff together!
 		if self.flags['is_report']:
-			self.flags['search_query']='select * from `icls` WHERE '
+			self.flags['search_query']='select * from `icls`'
 			#It's a report, first try to parse it
 			print "It's a report!, num of args:"+str(len(argv))
 			if self.flags['is_search']:
+				self.flags['search_query']+=' WHERE '
 				print "It's a search!"
 				if len(argv)<3:	print_error('No Search term or tag detected; use -h to see options')
 				else:					
@@ -157,49 +158,70 @@ class parsing:
 					# TODO Now we iterate and make there where clause, IN if search, tag= if tag
 					for key, term in enumerate(self.flags['search_term']):
 						if self.flags['is_tag']:
-							if key>0:	self.flags['search_query']+=' AND '
-							self.flags['search_query']+="tag='"+term+"'"
-						else:
-							if key==0: self.flags['search_query']+="entry IN ("
-							if key>0:	self.flags['search_query']+=','
+							if key==0: self.flags['search_query']+="tag IN ("
+							if key>0:	self.flags['search_query']+=","
 							self.flags['search_query']+="'"+term+"'"
-					if self.flags['is_tag']==False: self.flags['search_query']+=')' #for end of in statement
+						else:							
+							if key>0:	self.flags['search_query']+=' AND '
+							self.flags['search_query']+=" entry LIKE '%"+term+"%'"		
+					if self.flags['is_tag']: self.flags['search_query']+=')'	
 	
-				if len(argv)==4:
+				if len(argv)>=4:
 					#term and start date					
 					self.flags['start_date']=argv[3]
-				elif len(argv)==5:
-					#term, start and finish date					
-					self.flags['start_date']=argv[3]
+					self.flags['search_query']+=" AND date>'"+self.flags['start_date']+"'"
+				if len(argv)==5:
+					#term, start and finish date	
 					self.flags['end_date']=argv[4]				
+					self.flags['search_query']+=" AND date<'"+self.flags['end_date']+"'"				
 			else:				
-				if len(argv)==3:
+				if len(argv)>=3:
 					#start date only
 					self.flags['start_date']=argv[2]
-				elif len(argv)==4:
+					self.flags['search_query']+=" WHERE date>'"+self.flags['start_date']+"'"
+				if len(argv)==4:
 					#term and start date
-					self.flags['start_date']=argv[2]
-					self.flags['end_date']=argv[3]		
-
-
+					self.flags['end_date']=argv[3]	
+					self.flags['search_query']+=" AND date<'"+self.flags['end_date']+"'"	
+		
 		print self.flags
 
+	def fetchRecord(self,dom):	
+		try:
+			results = dom.select(self.flags['search_query'])
+		except SDBResponseError as error:
+			aws_print_error(error)	 		
+		results_yn=0 	#this is in case there are no results, don't know why this isn't built in.
+		for result in results:
+			results_yn=1
+			print makeover(result)
+		if results_yn==1:
+			print colorize('gray','==============================',0)
+		return True
 	
+	#takes in domain connection, entry text, and flag of completed or not.
+	def logEntry(self,dom):
+		output=''
+		entry=self.flags['entry_text']
+		if self.flags['is_complete']==True:
+			entry+=' #complete'
+			output+=colorize('cyan','Completed a task, way to go!',1)
+		if self.flags['is_default']==True:
+			entry+=' #'+config.values['default']
+		the_id=uuid4()
+		entry=entry.replace('\\','')
+		entry_dict={'entry':entry,'date':strftime("%Y-%m-%dT%H:%M:%S+0000", localtime())}								
+		try:		
+			dom.put_attributes(the_id,entry_dict)
+			add_tags(dom,the_id,entry)
+		except SDBResponseError as error:
+				aws_print_error(error)
+		output+=colorize('gray','Entry: '+entry,1)
+		output+=colorize('green','Log entry submitted successfully.')
+		print output
+		return True
 
-#generates reports, TODO match the readme functionality on this
-def fetchRecord(dom,the_type='r',needle=''):
-	if the_type=='t':
-		query = 'select * from `icls`'+needle
-	else: 
-		query = 'select * from `icls`'
-	results = dom.select(query)
-	results_yn=0 	#this is in case there are no results, don't know why this isn't built in.
-	for result in results:
-		results_yn=1
-		print makeover(result)
-	if results_yn==1:
-		print colorize('gray','==============================',0)
-	return True
+	
 #
 #
 #	BEGIN MAIN
@@ -231,8 +253,10 @@ except SDBResponseError as error:
 	else:
 		aws_print_error(error)
 
-#if the_input.flags['is_report']==True:
-	#fetchRecord(dom,'t')
+if the_input.flags['is_report']==True:
+	the_input.fetchRecord(dom)
+elif the_input.flags['is_entry']==True:
+	the_input.logEntry(dom)
 
 
 	

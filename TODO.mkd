@@ -1,5 +1,5 @@
 ## Todo List ##
-* Make the 'if report' and elif entry in main area
+* Make the if entry in main area
 * rewrite a mean report/search method
 * rewrite a mean entry method
 * Figure out acceptable date fields, note for -help
@@ -8,3 +8,5 @@
     * can't make entry
     * timed out?
     * if no domain error, make domain based on config, when okay then post. Else descriptive errors. all in red of course.
+
+### Bugs ###
