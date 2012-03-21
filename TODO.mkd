@@ -1,12 +1,8 @@
 ## Todo List ##
-* Make the if entry in main area
-* rewrite a mean report/search method
-* rewrite a mean entry method
+* clean out debug prints
+* figure out how to merge my branches
+* make reports/search have a title bar, to show what was searched
+* Make pagination for reports/search [P2]
 * Figure out acceptable date fields, note for -help
-* icls post possible errors
-    * no domain
-    * can't make entry
-    * timed out?
-    * if no domain error, make domain based on config, when okay then post. Else descriptive errors. all in red of course.
 
 ### Bugs ###
