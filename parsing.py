@@ -8,6 +8,7 @@ class parsing:
 	flags={'is_report':False,
 			'is_entry':False,
 			'entry_text':'',
+			'is_purge':False,
 			'is_tag':False,
 			'is_search':False,
 			'search_term':[],
@@ -21,6 +22,10 @@ class parsing:
 		if argv[1][0]=='-':
 			for arg in argv[1]:
 				if arg=='r':   self.flags['is_report']=True
+			 	elif arg=='p':
+			 		self.flags['is_purge']=True
+			 		self.flags['search_term']=argv[2]
+
 				elif arg=='d':
 					self.flags['is_default']=True
 					self.flags['is_entry']=True
@@ -99,7 +104,7 @@ class parsing:
 			results_yn=1
 			print makeover(result)
 		if results_yn==1:
-			print colorize('gray','==============================',0)
+			print colorize('gray','========================================',0)
 		return True
 	
 	#takes in domain connection, entry text, and flag of completed or not.
@@ -123,6 +128,17 @@ class parsing:
 		output+=colorize('green','Log entry submitted successfully.')
 		print output
 		return True
+	
+	#takes an item name, and deletes it
+	def remEntry(self,dom):
+		try:		
+			dom.delete_attributes(self.flags['search_term'])			
+		except SDBResponseError as error:
+				aws_print_error(error)
+		output=colorize('green','Log entry deleted successfully.')
+		print output
+		return True
+
 
 	def add_tags(self,dom,the_id,entry=''):
 		if entry.count('#'):		
