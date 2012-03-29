@@ -3,6 +3,7 @@ from uuid import uuid4
 from re import compile
 from framework import aws_print_error, colorize, print_help, makeover
 from boto.exception import SDBResponseError
+import config
 
 class parsing:
 	flags={'is_report':False,
@@ -14,6 +15,7 @@ class parsing:
 			'search_term':[],
 			'is_default':False,
 			'is_complete':False,
+			'is_monochrome':False,
 			'is_help':False,
 			'start_date':False,
 			'end_date':False,
@@ -25,7 +27,8 @@ class parsing:
 			 	elif arg=='p':
 			 		self.flags['is_purge']=True
 			 		self.flags['search_term']=argv[2]
-
+			 	elif arg=='m':
+			 		self.flags['is_monochrome']=True
 				elif arg=='d':
 					self.flags['is_default']=True
 					self.flags['is_entry']=True
@@ -102,9 +105,12 @@ class parsing:
 		results_yn=0 	#this is in case there are no results, don't know why this isn't built in.
 		for result in results:
 			results_yn=1
-			print makeover(result)
+			print makeover(result,self.flags['is_monochrome'])
 		if results_yn==1:
-			print colorize('gray','========================================',0)
+			if self.flags['is_monochrome']==False:
+				print colorize('gray','========================================',0)
+			else:
+				print '========================================'
 		return True
 	
 	#takes in domain connection, entry text, and flag of completed or not.

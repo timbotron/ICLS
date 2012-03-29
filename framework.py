@@ -35,11 +35,19 @@ def print_error(error_text):
   	return True
 
 #takes an entry, and makes it pretty!
-def makeover(entry):	
-	output=colorize('gray','========================================',1)	
-	output+=colorize('cyan',entry['entry'],1)
-	output+=colorize('cyan',strftime("%H:%M %m.%d.%Y", strptime(entry['date'],"%Y-%m-%dT%H:%M:%S+0000")),1)
-	output+=colorize('gray','ID: '+entry.name,0)	
+def makeover(entry,ismonochrome=False):	
+	if ismonochrome==False:
+		output=colorize('gray','========================================',1)	
+		output+=colorize('cyan',entry['entry'],1)
+		output+=colorize('cyan',strftime("%H:%M %m.%d.%Y", strptime(entry['date'],"%Y-%m-%dT%H:%M:%S+0000")),1)
+		output+=colorize('gray','ID: '+entry.name,0)
+	else:
+		output="========================================\n"
+		output+=entry['entry']+"\n"
+		output+=strftime("%H:%M %m.%d.%Y", strptime(entry['date'],"%Y-%m-%dT%H:%M:%S+0000"))+"\n"
+		output+='ID: '+entry.name
+
+		
 	return output
 #If, during parsing, help was flagged print out help text and then exit TODO read it from a md file
 def print_help():

@@ -1,0 +1,56 @@
+# ICLS Documentation #
+Version 1.0
+
+## Contributors ##
+Tim Habersack (tim@hithlonde.com - http://tim.hithlonde.com)
+
+## Getting Started ##
+* Make sure you have the boto python package installed. See [Boto, a Python package](https://code.google.com/p/boto/)
+* Set your configuration in the config.py file.
+   * To get your access and private key: https://aws-portal.amazon.com/gp/aws/securityCredentials
+   * Choose a name for your domain (Under which all entries will be posted. Think of it like a table name.)
+   * Choose your region, note pricing is different for each region (https://aws.amazon.com/simpledb/pricing/). Options are:
+      * "us-east" - US East (Virginia)   
+      * "us-west-1" - US West (Northern California)
+      * "us-west-2" - US West (Oregon)
+      * "eu-west-1" - EU (Ireland)
+      * "ap-southeast-1" - Asia Pacific (Singapore)
+      * "ap-northeast-1" - Asia Pacific (Tokyo)
+      * "sa-east-1" - South America (Sao Paulo)
+   * Choose a default tag, if you wish. This hashtag will be appended to your entry if you use the '-d' flag.
+* You're all set. I'd recommend making an alias of "python /path/to/icls.py" so it's shorter to type.
+
+## Using ICLS ##
+(Assuming 'icls'='python /path/to/icls.py')
+
+Using ICLS is a breeze. There are several basic functions of ICLS:
+* Add an entry to ICLS
+* Generate a report of entries, optional start date, end date
+* Run a search of entries, optional is tag, search term, start date, finish date
+* Delete an entry
+
+### Adding an entry ###
+
+
+## Flags ##
+
+* -c _entry_, Entry user inputs is a completed task
+* -s _searchterm date1=0 date2=0_, search, expects a term, and uses date1 as start date, if date2 is there, looks inbetween
+* -r _date1=0 date2=0_, generates list of all log entries, and if there uses date1 as start date, if date2 is there, looks inbetween
+
+## Requirements ##
+* Python
+* [Boto, a Python package](https://code.google.com/p/boto/), I didn't want to use any packages, but using boto makes the auth, etc much easier. And at the end of day, I want to get this working, not take forever re-inventing the wheel on HMAC signature generation
+
+## Reason for Building ##
+ICLS is a side project. I want a log I can throw all my little random posts into, without feeling weird about compromising the 'professionalism' of my identi.ca/twitter account. Also, I want to try working with Amazon's SimpleDB.
+
+## Helpful Links ##
+* [AWS Management Console](https://console.aws.amazon.com/console/home)
+* [Getting Started with SimpleDB](http://docs.amazonwebservices.com/AmazonSimpleDB/latest/GettingStartedGuide/Welcome.html)
+* [Amazon SimpleDB Development Guide](http://docs.amazonwebservices.com/AmazonSimpleDB/2009-04-15/DeveloperGuide/Welcome.html)
+* [helpful boto connect_sdb parameters](http://permalink.gmane.org/gmane.comp.python.boto/1642)
+
+## License ##
+
+ICLS by Tim Habersack is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License.
