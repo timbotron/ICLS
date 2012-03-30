@@ -24,33 +24,43 @@ Tim Habersack (tim@hithlonde.com - http://tim.hithlonde.com)
 (Assuming 'icls'='python /path/to/icls.py')
 
 Using ICLS is a breeze. There are several basic functions of ICLS:
+
 * Add an entry to ICLS
 * Generate a report of entries, optional start date, end date
 * Run a search of entries, optional is tag, search term, start date, finish date
 * Delete an entry
 
 ### Adding an entry ###
+* icls "Entry text here."
+* icls -c "Entry that will have the completed hashtag appended to it."
+* icls -d "Entry that will have the default tag from your config file appended to it."
+Of course, you can combine tags, so:
+'icls -cd "An entry with default tag and completed tag appended."
 
+### Reports ###
+* icls -r
+   * Returns all entries.
+* icls -r 2012-03-01
+   * Returns all entries that were posted on or after 2012-03-01.
+* icls -r 2012-03-01 2012-03-31
+   * Returns all entries that were posted on or between 2012-03-01 and 2012-03-31.
 
-## Flags ##
+### Searching ###
+* icls -s term,term2,etc
+   * Returns all entries that contain all of the terms
+* icls -s term,term2,etc 2012-03-01
+   * Returns all entries that contain all of the terms that were posted on or after 2012-03-01
+* icls -s term,term2,etc 2012-03-01 2012-03-31
+   * Returns all entries that contain all of the terms that were posted on or between 2012-03-01 and 2012-03-31
+* icls -st tag1,tag2
+   * Returns all entries that contain tag1 and tag2. Note date ranges work with the -t flag as well
 
-* -c _entry_, Entry user inputs is a completed task
-* -s _searchterm date1=0 date2=0_, search, expects a term, and uses date1 as start date, if date2 is there, looks inbetween
-* -r _date1=0 date2=0_, generates list of all log entries, and if there uses date1 as start date, if date2 is there, looks inbetween
-
-## Requirements ##
-* Python
-* [Boto, a Python package](https://code.google.com/p/boto/), I didn't want to use any packages, but using boto makes the auth, etc much easier. And at the end of day, I want to get this working, not take forever re-inventing the wheel on HMAC signature generation
-
-## Reason for Building ##
-ICLS is a side project. I want a log I can throw all my little random posts into, without feeling weird about compromising the 'professionalism' of my identi.ca/twitter account. Also, I want to try working with Amazon's SimpleDB.
-
-## Helpful Links ##
-* [AWS Management Console](https://console.aws.amazon.com/console/home)
-* [Getting Started with SimpleDB](http://docs.amazonwebservices.com/AmazonSimpleDB/latest/GettingStartedGuide/Welcome.html)
-* [Amazon SimpleDB Development Guide](http://docs.amazonwebservices.com/AmazonSimpleDB/2009-04-15/DeveloperGuide/Welcome.html)
-* [helpful boto connect_sdb parameters](http://permalink.gmane.org/gmane.comp.python.boto/1642)
+### Deleting ###
+* icls -p e602e824-d92a-49e2-892e-310197c38555
+   * Deletes an entry with that ID associated with it.
 
 ## License ##
 
-ICLS by Tim Habersack is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License.
+Copyright 2012 Tim Habersack.
+
+ICLS is licensed under a GNU General Public License (GPL) v3.

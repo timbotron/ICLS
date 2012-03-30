@@ -1,8 +1,7 @@
 ## Todo List ##
-* clean out debug prints
+* Get tag searching to require them all to be in entry
 * figure out how to merge my branches
 * make reports/search have a title bar, to show what was searched
 * Make pagination for reports/search [P2]
-* Figure out acceptable date fields, note for -help
+* get -h to output the Doc file
 
-### Bugs ###

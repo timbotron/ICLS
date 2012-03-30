@@ -5,20 +5,14 @@ ICLS (Inconceivably Complex Logging System)
 Tim Habersack (tim@hithlonde.com - http://tim.hithlonde.com)
 
 ## Summary: ##
-ICLS is a command-line, python-based logging system. Specifically, it's designed for a contract worker to be logging what they are doing at that time, bugs they figured out, etc. There will be a flag for when something is actually completed. 
+ICLS is a command-line, python-based logging system that supports tagging, searches, reports, etc. Specifically, it's designed for a contract worker to be logging what they are doing at that time, bugs they figured out, etc. However, there are many other potential uses, such as having all your servers sending their log messages to one location.
 
 ## Notable features will include: ##
 
 * Dead-simple to add an entry (icls "entry text here")
-* Flag, see below
+* Tons of options (see documentation)
 * icls.conf config file
-* entry retrieval (via unnecessary menu?!)
-
-## Flags ##
-
-* -c _entry_, Entry user inputs is a completed task
-* -s _searchterm date1=0 date2=0_, search, expects a term, and uses date1 as start date, if date2 is there, looks inbetween
-* -r _date1=0 date2=0_, generates list of all log entries, and if there uses date1 as start date, if date2 is there, looks inbetween
+* entry retrieval and deletion
 
 ## Requirements ##
 * Python
@@ -35,4 +29,6 @@ ICLS is a side project. I want a log I can throw all my little random posts into
 
 ## License ##
 
-ICLS by Tim Habersack is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License.
+Copyright 2012 Tim Habersack.
+
+ICLS is licensed under a GNU General Public License (GPL) v3.
