@@ -19,17 +19,7 @@ import boto.sdb
 from boto.exception import SDBResponseError
 from parsing import parsing
 
-# Helpful links:
-# http://nullege.com/codes/search/boto.exception.SDBResponseError
-# http://docs.python.org/library/stdtypes.html#typesseq
-# http://stackoverflow.com/questions/8176002/how-can-i-handle-a-boto-exception-in-python
-
-# Helpful python:
-#print strftime("%Y-%m-%dT%H:%M:%S+0000", localtime()) #Properly formatted for SimpleDB!
-#conn = boto.sdb.connect_to_region('us-west-2',aws_access_key_id=config.values['access_key_id'],aws_secret_access_key=config.values['secret_access_key'])
-#results = conn.get_all_domains()
-
-
+# Connect to the region chosen in the config file
 def connect():
 	conn = boto.sdb.connect_to_region(config.values['region'],aws_access_key_id=config.values['access_key_id'],
 						aws_secret_access_key=config.values['secret_access_key'])

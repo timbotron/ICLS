@@ -1,10 +1,13 @@
 # Project: #
+
 ICLS (Inconceivably Complex Logging System)
 
 ## Contributors: ##
+
 Tim Habersack (tim@hithlonde.com - http://tim.hithlonde.com)
 
 ## Summary: ##
+
 ICLS is a command-line, python-based logging system that supports tagging, searches, reports, etc. Specifically, it's designed for a contract worker to be logging what they are doing at that time, bugs they figured out, etc. However, there are many other potential uses, such as having all your servers sending their log messages to one location.
 
 ## Notable features will include: ##
@@ -15,20 +18,17 @@ ICLS is a command-line, python-based logging system that supports tagging, searc
 * entry retrieval and deletion
 
 ## Requirements ##
+
 * Python
+* Account with [Amazon Web Services](https://aws.amazon.com/)
 * [Boto, a Python package](https://code.google.com/p/boto/), I didn't want to use any packages, but using boto makes the auth, etc much easier. And at the end of day, I want to get this working, not take forever re-inventing the wheel on HMAC signature generation
 
 ## Reason for Building ##
-ICLS is a side project. I want a log I can throw all my little random posts into, without feeling weird about compromising the 'professionalism' of my identi.ca/twitter account. Also, I want to try working with Amazon's SimpleDB.
 
-## Helpful Links ##
-* [AWS Management Console](https://console.aws.amazon.com/console/home)
-* [Getting Started with SimpleDB](http://docs.amazonwebservices.com/AmazonSimpleDB/latest/GettingStartedGuide/Welcome.html)
-* [Amazon SimpleDB Development Guide](http://docs.amazonwebservices.com/AmazonSimpleDB/2009-04-15/DeveloperGuide/Welcome.html)
-* [helpful boto connect_sdb parameters](http://permalink.gmane.org/gmane.comp.python.boto/1642)
+ICLS is a side project. I want a log I can throw all my little random posts into, without feeling weird about compromising the 'professionalism' of my identi.ca/twitter account. Also, I want to try working with Amazon's SimpleDB, and continue to strengthen my Python skills.
 
 ## License ##
 
-Copyright 2012 Tim Habersack.
+Copyright 2012 (c) Tim Habersack.
 
 ICLS is licensed under a GNU General Public License (GPL) v3.

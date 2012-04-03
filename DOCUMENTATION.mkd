@@ -55,6 +55,11 @@ Of course, you can combine tags, so:
 * icls -st tag1,tag2
    * Returns all entries that contain tag1 and tag2. Note date ranges work with the -t flag as well
 
+### Monochrome ###
+* icls -rm
+   * the '-m' flag, when used in conjunction with [-r] or [-s] will output with no color.
+   * Useful when outputting to a file. Ex: icls -rm > output.txt
+
 ### Deleting ###
 * icls -p e602e824-d92a-49e2-892e-310197c38555
    * Deletes an entry with that ID associated with it.

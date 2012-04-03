@@ -3,5 +3,4 @@
 * figure out how to merge my branches
 * make reports/search have a title bar, to show what was searched
 * Make pagination for reports/search [P2]
-* get -h to output the Doc file
 

@@ -1,0 +1,11 @@
+## Helpful Links ##
+
+* [AWS Management Console](https://console.aws.amazon.com/console/home)
+* [Getting Started with SimpleDB](http://docs.amazonwebservices.com/AmazonSimpleDB/latest/GettingStartedGuide/Welcome.html)
+* [Amazon SimpleDB Development Guide](http://docs.amazonwebservices.com/AmazonSimpleDB/2009-04-15/DeveloperGuide/Welcome.html)
+* [helpful boto connect_sdb parameters](http://permalink.gmane.org/gmane.comp.python.boto/1642)
+* http://nullege.com/codes/search/boto.exception.SDBResponseError
+* http://docs.python.org/library/stdtypes.html#typesseq
+* http://stackoverflow.com/questions/8176002/how-can-i-handle-a-boto-exception-in-python
+
+
