@@ -69,7 +69,7 @@ class parsing:
 			print_help()
 		#Lets get all the report/search stuff together!
 		if self.flags['is_report']:
-			self.flags['search_query']='select * from `icls`'
+			self.flags['search_query']='select * from `'+config.values['domain']+'`'
 			#It's a report, first try to parse it
 			#print "It's a report!, num of args:"+str(len(argv))
 			if self.flags['is_search']:
