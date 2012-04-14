@@ -17,6 +17,8 @@ from sys import argv
 import config
 import boto.sdb
 from boto.exception import SDBResponseError
+from framework import aws_print_error, print_error
+import xml.dom.minidom
 from parsing import parsing
 
 # Connect to the region chosen in the config file
