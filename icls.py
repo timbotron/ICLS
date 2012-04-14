@@ -17,7 +17,7 @@ from sys import argv
 import config
 import boto.sdb
 from boto.exception import SDBResponseError
-from framework import aws_print_error, print_error
+from framework import aws_print_error, print_error, getText
 import xml.dom.minidom
 from parsing import parsing
 
