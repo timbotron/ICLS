@@ -10,7 +10,9 @@ Tim Habersack (tim@hithlonde.com - http://tim.hithlonde.com)
 
 ICLS is a command-line, python-based logging system that supports tagging, searches, reports, etc. Specifically, it's designed for a contract worker to be logging what they are doing at that time, bugs they figured out, etc. However, there are many other potential uses, such as having all your servers sending their log messages to one location.
 
-## Notable features will include: ##
+Review: http://tim.hithlonde.com/2012/announcing-icls/
+
+## Notable features include: ##
 
 * Dead-simple to add an entry (icls "entry text here")
 * Tons of options (see documentation)
